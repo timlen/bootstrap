@@ -430,8 +430,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   showButtonBar: true
 })
 
-.directive('datepickerPopup', ['$compile', '$parse', '$document', '$position', 'dateFilter', 'dateParser', 'datepickerPopupConfig',
-function ($compile, $parse, $document, $position, dateFilter, dateParser, datepickerPopupConfig) {
+.directive('datepickerPopup', ['$compile', '$parse', '$document', '$position', '$timeout', 'dateFilter', 'dateParser', 'datepickerPopupConfig',
+function ($compile, $parse, $document, $position, $timeout, dateFilter, dateParser, datepickerPopupConfig) {
   return {
     restrict: 'EA',
     require: 'ngModel',
@@ -440,7 +440,8 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       currentText: '@',
       clearText: '@',
       closeText: '@',
-      dateDisabled: '&'
+      dateDisabled: '&',
+      openOnFocus: '@'
     },
     link: function(scope, element, attrs, ngModel) {
       var dateFormat,
@@ -564,6 +565,16 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       };
       element.bind('keydown', keydown);
 
+      var focus = function(evt) {
+        $timeout(function() {
+          scope.isOpen = true;
+        });
+      };
+
+      if (scope.openOnFocus) {
+        element.bind('focus', focus);
+      }
+
       scope.keydown = function(evt) {
         if (evt.which === 27) {
           evt.preventDefault();
@@ -614,6 +625,7 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       scope.$on('$destroy', function() {
         $popup.remove();
         element.unbind('keydown', keydown);
+        element.unbind('focus', focus);
         $document.unbind('click', documentClickBind);
       });
     }
