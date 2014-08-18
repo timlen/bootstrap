@@ -238,11 +238,20 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
               scope.$digest();
             }
 
-            function removeTooltip() {
+            function removeTooltip( destroy ) {
               transitionTimeout = null;
               if (tooltip) {
-                tooltip.remove();
-                tooltip = null;
+               if (destroy) {
+                  tooltip.remove();
+                  tooltip = null;
+                } else {
+                  // equals to "tooltip.detach();"
+                  angular.forEach( tooltip, function( e ) {
+                    if (e.parentNode) {
+                      e.parentNode.removeChild( e );
+                    }
+                  } );
+                }
               }
             }
 
