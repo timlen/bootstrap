@@ -535,7 +535,7 @@ function ($compile, $parse, $document, $position, $timeout, dateFilter, datePars
 
         if ( closeOnDateSelection ) {
           scope.isOpen = false;
-          element[0].focus();
+          //element[0].focus();
         }
       };
 
