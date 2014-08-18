@@ -1,5 +1,9 @@
 # bootstrap - [AngularJS](http://angularjs.org/) directives specific to [Bootstrap](http://getbootstrap.com)
 
+This fork contains the following extras:
+- Fix for [#220](https://github.com/angular-ui/bootstrap/issues/220), lets us have html templates for popover content
+- [PR #2515](https://github.com/angular-ui/bootstrap/pull/2515), automatically open the datepicker popup on focus
+
 ***
 
 [![Build Status](https://secure.travis-ci.org/angular-ui/bootstrap.png)](http://travis-ci.org/angular-ui/bootstrap)
